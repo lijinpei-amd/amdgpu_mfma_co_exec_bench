@@ -439,6 +439,16 @@ TPUT_KERNEL(win3_xdl_more, STREAM4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D, SEQ
 TPUT_KERNEL(win5_xdl32_before, STREAM4(MFMA_32, MFMA_32_B, MFMA_32, MFMA_32_B, SEQ5_BEFORE))
 TPUT_KERNEL(win5_xdl32_after, STREAM4(MFMA_32, MFMA_32_B, MFMA_32, MFMA_32_B, SEQ5_AFTER))
 TPUT_KERNEL(win5_xdl32_more, STREAM4(MFMA_32, MFMA_32_B, MFMA_32, MFMA_32_B, SEQ5_MORE))
+// An SALU between the MFMA and the PKs. _<N>u unpacks the first N PKs.
+LAT_KERNEL(mfma16_salu_fma, MFMA_16 SALU FMA_F32)
+TPUT_KERNEL(win3_xdl_salu_1u, STREAM4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D, SALU SEQ3_BEFORE))
+TPUT_KERNEL(win3_xdl_salu_2u, STREAM4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D, SALU SEQ3_AFTER))
+TPUT_KERNEL(win3_xdl_salu_3u, STREAM4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D, SALU SEQ3_MORE))
+// SALU_LIT is 8 bytes, so the VALUs after it keep their 8-byte alignment.
+#define SALU_LIT S("s_mov_b32 s0, 0x3c3c3c3c")
+TPUT_KERNEL(win3_xdl_salulit_1u, STREAM4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D, SALU_LIT SEQ3_BEFORE))
+TPUT_KERNEL(win3_xdl_salulit_2u, STREAM4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D, SALU_LIT SEQ3_AFTER))
+TPUT_KERNEL(win3_xdl_salulit_3u, STREAM4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D, SALU_LIT SEQ3_MORE))
 
 TPUT_KERNEL(mfma16, X4(MFMA_16, MFMA_16_B, MFMA_16_C, MFMA_16_D))
 TPUT_KERNEL(fma, X4(FMA_F32, FMA_F32, FMA_F32, FMA_F32))
@@ -481,6 +491,31 @@ TPUT_KERNEL(win5_x2_32_more, STREAM4(X2_32, X2_32_B, X2_32, X2_32_B, SEQ5_MORE))
 TPUT_KERNEL(win5_f8_before, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SEQ5_BEFORE))
 TPUT_KERNEL(win5_f8_after, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SEQ5_AFTER))
 TPUT_KERNEL(win5_f8_more, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SEQ5_MORE))
+LAT_KERNEL(x2_16_salu_fma, X2_16 SALU FMA_F32)
+LAT_KERNEL(x2fp8_salu_fma, X2_FP8 SALU FMA_F32)
+LAT_KERNEL(x2fp8_salu2_fma, X2_FP8 SALU SALU FMA_F32)
+LAT_KERNEL(x2fp8_salu3_fma, X2_FP8 SALU SALU SALU FMA_F32)
+// Non-VALU instructions in the slots the XDL holds VALU off. The DS
+// addresses are out of range: reads return 0 and writes are dropped.
+LAT_KERNEL(x2fp8_waitcnt_fma, X2_FP8 S("s_waitcnt lgkmcnt(0)") FMA_F32)
+LAT_KERNEL(x2fp8_dsread_fma, X2_FP8 S("ds_read_b32 v21, v4") FMA_F32)
+LAT_KERNEL(x2fp8_dswrite_fma, X2_FP8 S("ds_write_b32 v4, v5") FMA_F32)
+TPUT_KERNEL(win5_f8_salu_3u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU SEQ5_BEFORE))
+TPUT_KERNEL(win5_f8_salu_4u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU SEQ5_AFTER))
+TPUT_KERNEL(win5_f8_salu_5u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU SEQ5_MORE))
+TPUT_KERNEL(win5_f8_salulit_3u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU_LIT SEQ5_BEFORE))
+TPUT_KERNEL(win5_f8_salulit_4u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU_LIT SEQ5_AFTER))
+TPUT_KERNEL(win5_f8_salulit_5u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU_LIT SEQ5_MORE))
+TPUT_KERNEL(win5_f8_salu2_3u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU SALU SEQ5_BEFORE))
+TPUT_KERNEL(win5_f8_salu2_4u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU SALU SEQ5_AFTER))
+TPUT_KERNEL(win5_f8_salu2_5u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SALU SALU SEQ5_MORE))
+// analyze_att.py splits probe groups at s_nop, so time s_nop here instead.
+#define SNOP2 S("s_nop 0") S("s_nop 0")
+TPUT_KERNEL(win5_f8_snop2_3u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SNOP2 SEQ5_BEFORE))
+TPUT_KERNEL(win5_f8_snop2_4u, STREAM4(X2_FP8, X2_FP8_B, X2_FP8_C, X2_FP8_D, SNOP2 SEQ5_AFTER))
+TPUT_KERNEL(win3_x2_salu2_1u, STREAM4(X2_16, X2_16_B, X2_16_C, X2_16_D, SALU SALU SEQ3_BEFORE))
+TPUT_KERNEL(win3_x2_salu2_2u, STREAM4(X2_16, X2_16_B, X2_16_C, X2_16_D, SALU SALU SEQ3_AFTER))
+TPUT_KERNEL(win3_x2_salu2_3u, STREAM4(X2_16, X2_16_B, X2_16_C, X2_16_D, SALU SALU SEQ3_MORE))
 // F8F6F4 streams, unscaled and scaled: does the LD_SCALE slot cost throughput?
 #define X2_FP6_C S("v_mfma_f32_16x16x128_f8f6f4 v[28:31], v[64:69], v[72:77], v[28:31] cbsz:2 blgp:2")
 #define X2_FP6_D S("v_mfma_f32_16x16x128_f8f6f4 v[48:51], v[64:69], v[72:77], v[48:51] cbsz:2 blgp:2")
@@ -571,6 +606,7 @@ static const LatK kLat[] = {
     L(mfma16_fma_mfma16),  L(mfma16_vnop),        L(mfma16_movfar),
     L(mfma16_addu32),      L(mfma16_salu),        L(mfma16_pkmul),
     L(mfma16_pkadd),       L(mfma16_pkmov),
+    L(mfma16_salu_fma),
     L(mfma16_fill1_pkfma), L(mfma16_fill2_pkfma), L(mfma16_fill3_pkfma),
     L(mfma16_fill4_pkfma), L(mfma16_fill5_pkfma), L(mfma16_fill6_pkfma),
     L(mfma16_pkfma_mfma16), L(mfma16_dot_mfma16),
@@ -604,6 +640,10 @@ static const LatK kLat[] = {
     L(x2_16_fill4_pkfma),  L(x2_16_pkfma_x2_16),  L(x2_16_dot_x2_16),
     LDC(x2_16),   LDC(x2fp8),   LDC(x2scale),
     L(mfma16_dot2cbf16),   L(x2_16_dot2cbf16),
+    L(x2_16_salu_fma),     L(x2fp8_salu_fma),     L(x2fp8_salu2_fma),
+    L(x2fp8_salu3_fma),
+    L(x2fp8_waitcnt_fma),  L(x2fp8_dsread_fma),
+    L(x2fp8_dswrite_fma),
 #endif
 };
 #define T(n) {"tput_" #n, tput_##n}
@@ -616,12 +656,19 @@ static const TputK kTput[] = {
     T(win_sgemm_before), T(win_sgemm_after),
     T(win3_xdl_before), T(win3_xdl_after), T(win3_xdl_more),
     T(win5_xdl32_before), T(win5_xdl32_after), T(win5_xdl32_more),
+    T(win3_xdl_salu_1u), T(win3_xdl_salu_2u), T(win3_xdl_salu_3u),
+    T(win3_xdl_salulit_1u), T(win3_xdl_salulit_2u), T(win3_xdl_salulit_3u),
 #ifdef GFX950
     T(x2_16), T(x2_16_fma), T(x2_16_pkfma), T(alt_mfma16_x2_16),
     T(win_x2_before), T(win_x2_after), T(win_f8_before), T(win_f8_after),
     T(win3_x2_before), T(win3_x2_after), T(win3_x2_more),
     T(win5_x2_32_before), T(win5_x2_32_after), T(win5_x2_32_more),
     T(win5_f8_before), T(win5_f8_after), T(win5_f8_more),
+    T(win5_f8_salu_3u), T(win5_f8_salu_4u), T(win5_f8_salu_5u),
+    T(win5_f8_salulit_3u), T(win5_f8_salulit_4u), T(win5_f8_salulit_5u),
+    T(win5_f8_salu2_3u), T(win5_f8_salu2_4u), T(win5_f8_salu2_5u),
+    T(win5_f8_snop2_3u), T(win5_f8_snop2_4u),
+    T(win3_x2_salu2_1u), T(win3_x2_salu2_2u), T(win3_x2_salu2_3u),
     T(x2fp8), T(x2scale), T(x2fp6), T(x2scalefp6), T(x2fp4), T(x2scalefp4),
     T(alt_x2fp8_x2scale),
 #endif

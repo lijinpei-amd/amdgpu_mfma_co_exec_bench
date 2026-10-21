@@ -20,7 +20,7 @@ ATT_LIB=/dir/with/librocprof-trace-decoder.so ./run.sh   # if the decoder isn't 
   - [`results_gfx942_ptl.txt`](results_gfx942_ptl.txt): MI308X, PTL on
   - [`results_gfx950.txt`](results_gfx950.txt): MI350X, gfx950
 
-The probe operands never depend on the MFMA, so the delays below come from the hardware issue rules, not from data dependencies. All values are cycles after the MFMA issues at cycle 0, measured with ATT. Each value has min = median = max over 124 reps (31 per wave × 4 waves). Earlier MI350X runs occasionally had a late rep, affecting the max only, which never reproduced. Each wave's first rep runs on a cold instruction cache and is skipped.
+The probe operands never depend on the MFMA, so the delays below come from the hardware issue rules, not from data dependencies. All values are cycles after the MFMA issues at cycle 0, measured with ATT. Each value has min = median = max over 124 reps (31 per wave × 4 waves). MI350X runs occasionally have a late rep, affecting the max only, which never reproduces. Each wave's first rep runs on a cold instruction cache and is skipped.
 
 ## MI350X (gfx950)
 
@@ -154,6 +154,30 @@ Unpack-window boundary (`tput_win3_*`, `tput_win5_*`), MI350X, in cycles per MFM
 
 - **Model:** the k-th unpacked pair issues at V + 2k − 2 and V + 2k − 1, a packed PK no earlier than P, and the next MFMA one slot after the last VALU. Every cell is 4 × (the next MFMA's slot) + 0.2.
 - **Boundary:** unpacking the last PK ties or, for fp8, loses a slot, so the fixed pass's P − V + 1 window is the largest that never hurts.
+
+Non-VALU instructions before the first VALU (`lat_*_salu*_fma`, `lat_x2fp8_{waitcnt,dsread,dswrite}_fma`), MI350X, in slots. A wave issues one instruction per slot, and the slots before V can hold other instructions:
+
+| MFMA (V) | Before the VALU | Their slots | First VALU |
+|---|---|---|---:|
+| legacy XDL 16x16x16 (1) | `s_mov` | 1 | 2 |
+| XDL2x 16x16x32 (2) | `s_mov` | 1 | 2 |
+| F8F6F4 fp8 (3) | 1 / 2 / 3 × `s_mov` | 1 / 1, 2 / 1, 2, 3 | 3 / 3 / 4 |
+| F8F6F4 fp8 (3) | `s_waitcnt` or `ds_read_b32` | 2 | 3 |
+| F8F6F4 fp8 (3) | `ds_write_b32` | 2 | 4 |
+
+The same streams timed (`tput_win*_salu*`, `tput_win5_f8_snop2_*`), in cycles per MFMA, with the first N PKs unpacked (`_<N>u`):
+
+| Stream | Fewer | Best | More |
+|---|---:|---:|---:|
+| legacy XDL 16x16x16 + 8-byte `s_mov` + 3 PK | 1u: 32.2 | 2u: 28.2 | 3u: 32.2 |
+| XDL2x 16x16x32 + 2 `s_mov` + 3 PK | 1u: 36.2 | 2u: 32.2 | 3u: 36.2 |
+| F8F6F4 fp8 + 8-byte `s_mov` + 5 PK | 3u: 52.2 | 4u: 48.2 | 5u: 52.2 |
+| F8F6F4 fp8 + 2 `s_mov` + 5 PK | 3u: 52.2 | 4u: 48.2 | 5u: 52.2 |
+| F8F6F4 fp8 + 2 `s_nop 0` + 5 PK | 3u: 52.2 | 4u: 48.2 | |
+
+- **Free slots:** up to V − 1 SALUs before the first VALU cost nothing. `s_waitcnt` and DS reads wait until slot 2, and a DS write delays the VALU.
+- **Fetch alignment:** a single 4-byte `s_mov` shifts the 8-byte VALUs after it and adds 1 to 3.5 cycles per MFMA (`tput_win*_salu_*u`: 29.2, 51.2, 55.7). The 8-byte (literal) and paired variants avoid this.
+- **LLVM:** `SIPreEmitPeephole` counted those SALUs and unpacked the "Fewer" column after XDL2x and F8F6F4. A follow-up credits up to V − 1 cycles of non-SOPP SALU before the first other instruction, which gives "Best" for the `s_mov` rows. The legacy XDL row is already "Best".
 
 ## ATT notes
 
