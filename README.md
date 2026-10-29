@@ -1,6 +1,6 @@
 # XDL → PK_F32 issue-timing benchmark
 
-Measures when VALU, PK_F32 and DOT instructions can issue after an MFMA on MI308X (gfx942) and MI350X (gfx950), and checks the timing against the shader programming guide on real hardware.
+Measures when VALU, PK_F32 and DOT instructions can issue after an MFMA on MI300X and MI308X (gfx942) and MI350X (gfx950), and checks the timing against the shader programming guide on real hardware.
 
 ```
 ./run.sh > results_<arch>.txt 2>&1   # gfx942 or gfx950, detected with rocminfo; ~5 min (gfx942), ~10 min (gfx950)
@@ -18,6 +18,7 @@ ATT_LIB=/dir/with/librocprof-trace-decoder.so ./run.sh   # if the decoder isn't 
 - Raw output:
   - [`results_gfx942.txt`](results_gfx942.txt): MI308X, gfx942, PTL off
   - [`results_gfx942_ptl.txt`](results_gfx942_ptl.txt): MI308X, PTL on
+  - [`results_gfx942_mi300x.txt`](results_gfx942_mi300x.txt): MI300X, gfx942, no PTL setting
   - [`results_gfx950.txt`](results_gfx950.txt): MI350X, gfx950
 
 The probe operands never depend on the MFMA, so the delays below come from the hardware issue rules, not from data dependencies. All values are cycles after the MFMA issues at cycle 0, measured with ATT. Each value has min = median = max over 124 reps (31 per wave × 4 waves). MI350X runs occasionally have a late rep, affecting the max only, which never reproduces. Each wave's first rep runs on a cold instruction cache and is skipped.
@@ -61,6 +62,7 @@ Whether VALU co-executes with XDL depends on the PTL setting:
 
 - With PTL disabled, which is this machine's default, no VALU co-executes. See [`results_gfx942.txt`](results_gfx942.txt).
 - After `sudo amd-smi set -g 0 --ptl-status 1`, non-packed VALU co-executes. See [`results_gfx942_ptl.txt`](results_gfx942_ptl.txt).
+- MI300X has no PTL setting (`amd-smi static` reports `PTL_STATE: N/A`) and matches MI308X with PTL on in every cell. See [`results_gfx942_mi300x.txt`](results_gfx942_mi300x.txt).
 
 `amd-smi static` then reports `PTL_FORMAT: VECTOR,F8`.
 
@@ -130,13 +132,15 @@ Unpack-window fix (`tput_win_*`), in cycles per MFMA:
 
 | Stream | Before fix | After fix |
 |---|---:|---:|
-| legacy XDL + 4 PK, MI308X PTL on / MI350X | 36.2 | 32.2 |
+| legacy XDL + 4 PK, MI300X / MI308X PTL on / MI350X | 36.2 | 32.2 |
 | legacy XDL + 4 PK, MI308X PTL off | 36.2 | 40.2 |
+| legacy XDL 32x32x8 + 5 PK, MI300X / MI350X | 48.2 | 44.2 |
+| legacy XDL 32x32x8 + 5 PK, MI308X PTL off | 64.2 | 68.2 |
 | XDL2x + 4 PK, MI350X | 40.2 | 36.2 |
 | F8F6F4 XDL2x (fp8) + 6 PK, MI350X | 56.2 | 52.2 |
-| SGEMM + 4 PK, MI308X / MI350X | 68.2 | 56.2 |
-| DGEMM + 4 PK, MI308X / MI350X | 68.2 / 104.2 | 56.2 / 88.2 |
-| legacy XDL + 4 `v_pk_add_f16`, MI308X PTL on / MI350X | 20.2 | 20.2 |
+| SGEMM + 4 PK, gfx942 / MI350X | 68.2 | 56.2 |
+| DGEMM + 4 PK, gfx942 / MI350X | 68.2 / 104.2 | 56.2 / 88.2 |
+| legacy XDL + 4 `v_pk_add_f16`, MI300X / MI308X PTL on / MI350X | 20.2 | 20.2 |
 | legacy XDL + 4 `v_pk_add_f16`, MI308X PTL off | 32.2 | 32.2 |
 | legacy XDL + 4 `v_dot2_f32_f16`, all | 40.2 | 40.2 |
 

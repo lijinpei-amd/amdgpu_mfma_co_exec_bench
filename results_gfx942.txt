@@ -20,10 +20,22 @@ tput_win_dgemm_before         68.20        68.20
 tput_win_dgemm_after          56.20        56.20
 tput_win_sgemm_before         68.20        68.20
 tput_win_sgemm_after          56.20        56.20
+tput_win3_xdl_before          32.20        32.20
+tput_win3_xdl_after           36.20        36.20
+tput_win3_xdl_more            40.20        40.20
+tput_win5_xdl32_before        64.20        64.20
+tput_win5_xdl32_after         68.20        68.20
+tput_win5_xdl32_more          72.20        72.20
+tput_win3_xdl_salu_1u         32.70        32.70
+tput_win3_xdl_salu_2u         37.20        37.20
+tput_win3_xdl_salu_3u         41.70        41.70
+tput_win3_xdl_salulit_1u        32.20        32.20
+tput_win3_xdl_salulit_2u        36.20        36.20
+tput_win3_xdl_salulit_3u        40.20        40.20
 
 cross-wave kernel  MFMA cyc/inst  probe cyc/inst   probe end - MFMA end  bad pair
 x_mfma_none               16.16            0.00                  -4076         0
-x_none_fma                 0.00            4.12                   2063         0
+x_none_fma                 0.00            4.11                   2063         0
 x_none_pkfma               0.00            4.17                   2093         0
 x_mfma_fma                16.16           12.11                   2073         0
 x_mfma_pkfma              16.16           12.18                   2109         0
@@ -33,341 +45,347 @@ x_mfma_pkaddf16           16.16           12.15                   2093         0
 x_none_dot                 0.00            4.17                   2093         0
 x_mfma_dot                16.16           12.18                   2109         0
 
-== lat_xdl16_same(int*)  (ui_output_agent_22408_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16_same(int*)  (ui_output_agent_20019_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mfma_f32_16x16x16_bf16 v[24:27], v[0:1], v[2:3], v[24:27]
 
-== lat_xdl16_q_fma(int*)  (ui_output_agent_47529_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16_q_fma(int*)  (ui_output_agent_9164_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
 
-== lat_xdl16_q_pk(int*)  (ui_output_agent_14382_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16_q_pk(int*)  (ui_output_agent_34172_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_xdl16_q_pk16(int*)  (ui_output_agent_36384_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16_q_pk16(int*)  (ui_output_agent_65263_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
 
-== lat_xdl16_q_dot(int*)  (ui_output_agent_12559_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16_q_dot(int*)  (ui_output_agent_21663_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_xdl16acc_q_fma(int*)  (ui_output_agent_55497_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16acc_q_fma(int*)  (ui_output_agent_8826_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 a[0:3], v[0:1], v[2:3], a[0:3]
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
 
-== lat_xdl16acc_q_pk(int*)  (ui_output_agent_34794_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16acc_q_pk(int*)  (ui_output_agent_59896_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 a[0:3], v[0:1], v[2:3], a[0:3]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_xdl16acc_q_pk16(int*)  (ui_output_agent_30107_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16acc_q_pk16(int*)  (ui_output_agent_20022_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 a[0:3], v[0:1], v[2:3], a[0:3]
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
 
-== lat_xdl16acc_q_dot(int*)  (ui_output_agent_56220_dispatch_1, 4 waves, 124 reps)
+== lat_xdl16acc_q_dot(int*)  (ui_output_agent_21123_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 a[0:3], v[0:1], v[2:3], a[0:3]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_xdl4_q_fma(int*)  (ui_output_agent_58894_dispatch_1, 4 waves, 124 reps)
+== lat_xdl4_q_fma(int*)  (ui_output_agent_1433_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_4x4x4_16b_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1       8/    8/    8          4  v_fma_f32 v22, v4, v6, v7
 
-== lat_xdl4_q_pk(int*)  (ui_output_agent_65047_dispatch_1, 4 waves, 124 reps)
+== lat_xdl4_q_pk(int*)  (ui_output_agent_11111_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_4x4x4_16b_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_xdl4_q_pk16(int*)  (ui_output_agent_3402_dispatch_1, 4 waves, 124 reps)
+== lat_xdl4_q_pk16(int*)  (ui_output_agent_52429_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_4x4x4_16b_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1       8/    8/    8          4  v_pk_add_f16 v22, v4, v5
 
-== lat_xdl4_q_dot(int*)  (ui_output_agent_16886_dispatch_1, 4 waves, 124 reps)
+== lat_xdl4_q_dot(int*)  (ui_output_agent_34061_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_4x4x4_16b_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_xdl32_q_fma(int*)  (ui_output_agent_43285_dispatch_1, 4 waves, 124 reps)
+== lat_xdl32_q_fma(int*)  (ui_output_agent_43650_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_32x32x8_bf16 v[32:47], v[0:1], v[2:3], v[32:47]
     1      32/   32/   32         28  v_fma_f32 v22, v4, v6, v7
 
-== lat_xdl32_q_pk(int*)  (ui_output_agent_48959_dispatch_1, 4 waves, 124 reps)
+== lat_xdl32_q_pk(int*)  (ui_output_agent_7427_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_32x32x8_bf16 v[32:47], v[0:1], v[2:3], v[32:47]
     1      40/   40/   40         36  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_xdl32_q_pk16(int*)  (ui_output_agent_25324_dispatch_1, 4 waves, 124 reps)
+== lat_xdl32_q_pk16(int*)  (ui_output_agent_5340_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_32x32x8_bf16 v[32:47], v[0:1], v[2:3], v[32:47]
     1      32/   32/   32         28  v_pk_add_f16 v22, v4, v5
 
-== lat_xdl32_q_dot(int*)  (ui_output_agent_14086_dispatch_1, 4 waves, 124 reps)
+== lat_xdl32_q_dot(int*)  (ui_output_agent_60502_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_32x32x8_bf16 v[32:47], v[0:1], v[2:3], v[32:47]
     1      40/   40/   40         36  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_f16_q_fma(int*)  (ui_output_agent_41963_dispatch_1, 4 waves, 124 reps)
+== lat_f16_q_fma(int*)  (ui_output_agent_19586_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_f16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
 
-== lat_f16_q_pk(int*)  (ui_output_agent_46224_dispatch_1, 4 waves, 124 reps)
+== lat_f16_q_pk(int*)  (ui_output_agent_25029_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_f16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_f16_q_pk16(int*)  (ui_output_agent_53036_dispatch_1, 4 waves, 124 reps)
+== lat_f16_q_pk16(int*)  (ui_output_agent_63189_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_f16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
 
-== lat_f16_q_dot(int*)  (ui_output_agent_50905_dispatch_1, 4 waves, 124 reps)
+== lat_f16_q_dot(int*)  (ui_output_agent_15482_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_f16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_i8_q_fma(int*)  (ui_output_agent_11468_dispatch_1, 4 waves, 124 reps)
+== lat_i8_q_fma(int*)  (ui_output_agent_3638_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_i32_16x16x32_i8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
 
-== lat_i8_q_pk(int*)  (ui_output_agent_51316_dispatch_1, 4 waves, 124 reps)
+== lat_i8_q_pk(int*)  (ui_output_agent_3424_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_i32_16x16x32_i8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_i8_q_pk16(int*)  (ui_output_agent_49357_dispatch_1, 4 waves, 124 reps)
+== lat_i8_q_pk16(int*)  (ui_output_agent_26346_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_i32_16x16x32_i8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
 
-== lat_i8_q_dot(int*)  (ui_output_agent_47766_dispatch_1, 4 waves, 124 reps)
+== lat_i8_q_dot(int*)  (ui_output_agent_7243_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_i32_16x16x32_i8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_fp8_q_fma(int*)  (ui_output_agent_18449_dispatch_1, 4 waves, 124 reps)
+== lat_fp8_q_fma(int*)  (ui_output_agent_510_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x32_fp8_fp8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
 
-== lat_fp8_q_pk(int*)  (ui_output_agent_44635_dispatch_1, 4 waves, 124 reps)
+== lat_fp8_q_pk(int*)  (ui_output_agent_62606_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x32_fp8_fp8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_fp8_q_pk16(int*)  (ui_output_agent_42800_dispatch_1, 4 waves, 124 reps)
+== lat_fp8_q_pk16(int*)  (ui_output_agent_50589_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x32_fp8_fp8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
 
-== lat_fp8_q_dot(int*)  (ui_output_agent_22681_dispatch_1, 4 waves, 124 reps)
+== lat_fp8_q_dot(int*)  (ui_output_agent_39429_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x32_fp8_fp8 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_smleg_same(int*)  (ui_output_agent_7242_dispatch_1, 4 waves, 124 reps)
+== lat_smleg_same(int*)  (ui_output_agent_5759_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_16x16x32_f16 v[8:11], v[0:1], v[56:59], v20
     1      16/   16/   16         12  v_smfmac_f32_16x16x32_f16 v[24:27], v[0:1], v[56:59], v20
 
-== lat_smleg_q_fma(int*)  (ui_output_agent_38799_dispatch_1, 4 waves, 124 reps)
+== lat_smleg_q_fma(int*)  (ui_output_agent_21648_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_16x16x32_f16 v[8:11], v[0:1], v[56:59], v20
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
 
-== lat_smleg_q_pk(int*)  (ui_output_agent_49629_dispatch_1, 4 waves, 124 reps)
+== lat_smleg_q_pk(int*)  (ui_output_agent_20902_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_16x16x32_f16 v[8:11], v[0:1], v[56:59], v20
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_smleg_q_pk16(int*)  (ui_output_agent_24970_dispatch_1, 4 waves, 124 reps)
+== lat_smleg_q_pk16(int*)  (ui_output_agent_1394_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_16x16x32_f16 v[8:11], v[0:1], v[56:59], v20
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
 
-== lat_smleg_q_dot(int*)  (ui_output_agent_8652_dispatch_1, 4 waves, 124 reps)
+== lat_smleg_q_dot(int*)  (ui_output_agent_27483_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_16x16x32_f16 v[8:11], v[0:1], v[56:59], v20
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_smleg32_same(int*)  (ui_output_agent_47192_dispatch_1, 4 waves, 124 reps)
+== lat_smleg32_same(int*)  (ui_output_agent_47804_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_32x32x16_f16 v[32:47], v[0:1], v[56:59], v20
     1      32/   32/   32         28  v_smfmac_f32_32x32x16_f16 v[80:95], v[0:1], v[56:59], v20
 
-== lat_smleg32_q_fma(int*)  (ui_output_agent_42907_dispatch_1, 4 waves, 124 reps)
+== lat_smleg32_q_fma(int*)  (ui_output_agent_5935_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_32x32x16_f16 v[32:47], v[0:1], v[56:59], v20
     1      32/   32/   32         28  v_fma_f32 v22, v4, v6, v7
 
-== lat_smleg32_q_pk(int*)  (ui_output_agent_33498_dispatch_1, 4 waves, 124 reps)
+== lat_smleg32_q_pk(int*)  (ui_output_agent_42216_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_32x32x16_f16 v[32:47], v[0:1], v[56:59], v20
     1      40/   40/   40         36  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_smleg32_q_pk16(int*)  (ui_output_agent_39023_dispatch_1, 4 waves, 124 reps)
+== lat_smleg32_q_pk16(int*)  (ui_output_agent_48403_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_32x32x16_f16 v[32:47], v[0:1], v[56:59], v20
     1      32/   32/   32         28  v_pk_add_f16 v22, v4, v5
 
-== lat_smleg32_q_dot(int*)  (ui_output_agent_58758_dispatch_1, 4 waves, 124 reps)
+== lat_smleg32_q_dot(int*)  (ui_output_agent_17036_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_smfmac_f32_32x32x16_f16 v[32:47], v[0:1], v[56:59], v20
     1      40/   40/   40         36  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_sgemm_q_fma(int*)  (ui_output_agent_61489_dispatch_1, 4 waves, 124 reps)
+== lat_sgemm_q_fma(int*)  (ui_output_agent_61097_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x4_f32 v[8:11], v0, v1, v[8:11]
     1      40/   40/   40         36  v_fma_f32 v22, v4, v6, v7
 
-== lat_sgemm_q_pk(int*)  (ui_output_agent_24433_dispatch_1, 4 waves, 124 reps)
+== lat_sgemm_q_pk(int*)  (ui_output_agent_3521_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x4_f32 v[8:11], v0, v1, v[8:11]
     1      40/   40/   40         36  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_sgemm_q_pk16(int*)  (ui_output_agent_63338_dispatch_1, 4 waves, 124 reps)
+== lat_sgemm_q_pk16(int*)  (ui_output_agent_53274_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x4_f32 v[8:11], v0, v1, v[8:11]
     1      40/   40/   40         36  v_pk_add_f16 v22, v4, v5
 
-== lat_sgemm_q_dot(int*)  (ui_output_agent_32080_dispatch_1, 4 waves, 124 reps)
+== lat_sgemm_q_dot(int*)  (ui_output_agent_61670_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x4_f32 v[8:11], v0, v1, v[8:11]
     1      40/   40/   40         36  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_dgemm16_q_fma(int*)  (ui_output_agent_46649_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm16_q_fma(int*)  (ui_output_agent_28241_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_16x16x4_f64 v[32:39], v[0:1], v[2:3], v[32:39]
     1      40/   40/   40         36  v_fma_f32 v22, v4, v6, v7
 
-== lat_dgemm16_q_pk(int*)  (ui_output_agent_50295_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm16_q_pk(int*)  (ui_output_agent_47567_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_16x16x4_f64 v[32:39], v[0:1], v[2:3], v[32:39]
     1      40/   40/   40         36  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_dgemm16_q_pk16(int*)  (ui_output_agent_52034_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm16_q_pk16(int*)  (ui_output_agent_55967_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_16x16x4_f64 v[32:39], v[0:1], v[2:3], v[32:39]
     1      40/   40/   40         36  v_pk_add_f16 v22, v4, v5
 
-== lat_dgemm16_q_dot(int*)  (ui_output_agent_52436_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm16_q_dot(int*)  (ui_output_agent_44296_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_16x16x4_f64 v[32:39], v[0:1], v[2:3], v[32:39]
     1      40/   40/   40         36  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_dgemm4_same(int*)  (ui_output_agent_14813_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm4_same(int*)  (ui_output_agent_55775_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_4x4x4_4b_f64 v[32:33], v[0:1], v[2:3], v[32:33]
     1      16/   16/   16         12  v_mfma_f64_4x4x4_4b_f64 v[34:35], v[0:1], v[2:3], v[34:35]
 
-== lat_dgemm4_q_fma(int*)  (ui_output_agent_65405_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm4_q_fma(int*)  (ui_output_agent_22472_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_4x4x4_4b_f64 v[32:33], v[0:1], v[2:3], v[32:33]
     1      24/   24/   24         20  v_fma_f32 v22, v4, v6, v7
 
-== lat_dgemm4_q_pk(int*)  (ui_output_agent_64409_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm4_q_pk(int*)  (ui_output_agent_25122_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_4x4x4_4b_f64 v[32:33], v[0:1], v[2:3], v[32:33]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_dgemm4_q_pk16(int*)  (ui_output_agent_15080_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm4_q_pk16(int*)  (ui_output_agent_30527_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_4x4x4_4b_f64 v[32:33], v[0:1], v[2:3], v[32:33]
     1      24/   24/   24         20  v_pk_add_f16 v22, v4, v5
 
-== lat_dgemm4_q_dot(int*)  (ui_output_agent_32614_dispatch_1, 4 waves, 124 reps)
+== lat_dgemm4_q_dot(int*)  (ui_output_agent_41673_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f64_4x4x4_4b_f64 v[32:33], v[0:1], v[2:3], v[32:33]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_xf32_q_fma(int*)  (ui_output_agent_8650_dispatch_1, 4 waves, 124 reps)
+== lat_xf32_q_fma(int*)  (ui_output_agent_44981_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x8_xf32 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
 
-== lat_xf32_q_pk(int*)  (ui_output_agent_16455_dispatch_1, 4 waves, 124 reps)
+== lat_xf32_q_pk(int*)  (ui_output_agent_33366_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x8_xf32 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_xf32_q_pk16(int*)  (ui_output_agent_12944_dispatch_1, 4 waves, 124 reps)
+== lat_xf32_q_pk16(int*)  (ui_output_agent_62011_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x8_xf32 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
 
-== lat_xf32_q_dot(int*)  (ui_output_agent_49092_dispatch_1, 4 waves, 124 reps)
+== lat_xf32_q_dot(int*)  (ui_output_agent_6851_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x8_xf32 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
 
-== lat_mfma16_fma_mfma16(int*)  (ui_output_agent_62014_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_fma_mfma16(int*)  (ui_output_agent_17748_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_fma_f32 v22, v4, v6, v7
     2      20/   20/   20          0  v_mfma_f32_16x16x16_bf16 v[24:27], v[0:1], v[2:3], v[24:27]
 
-== lat_mfma16_vnop(int*)  (ui_output_agent_58535_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_vnop(int*)  (ui_output_agent_45019_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_nop
 
-== lat_mfma16_movfar(int*)  (ui_output_agent_60654_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_movfar(int*)  (ui_output_agent_45171_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mov_b32_e32 v100, s0
 
-== lat_mfma16_addu32(int*)  (ui_output_agent_62967_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_addu32(int*)  (ui_output_agent_54208_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_add_u32_e32 v22, v4, v5
 
-== lat_mfma16_salu(int*)  (ui_output_agent_35252_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_salu(int*)  (ui_output_agent_26162_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1       4/    4/    4          0  s_mov_b32 s0, 0
 
-== lat_mfma16_pkmul(int*)  (ui_output_agent_55346_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkmul(int*)  (ui_output_agent_14755_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_mul_f32 v[16:17], v[4:5], v[6:7]
 
-== lat_mfma16_pkadd(int*)  (ui_output_agent_3713_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkadd(int*)  (ui_output_agent_46260_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_add_f32 v[18:19], v[4:5], v[6:7]
 
-== lat_mfma16_pkmov(int*)  (ui_output_agent_7339_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkmov(int*)  (ui_output_agent_35755_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_mov_b32 v[20:21], v[4:5], v[6:7] op_sel:[0,1]
 
-== lat_mfma16_fill1_pkfma(int*)  (ui_output_agent_51298_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_salu_fma(int*)  (ui_output_agent_3404_dispatch_1, 4 waves, 124 reps)
+  pos  issue@ (min/med/max)  stall med  asm
+    0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
+    1       4/    4/    4          0  s_mov_b32 s0, 0
+    2      16/   16/   16          8  v_fma_f32 v22, v4, v6, v7
+
+== lat_mfma16_fill1_pkfma(int*)  (ui_output_agent_10185_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mov_b32_e32 v22, v5
     2      24/   24/   24          4  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_mfma16_fill2_pkfma(int*)  (ui_output_agent_40528_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_fill2_pkfma(int*)  (ui_output_agent_43968_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mov_b32_e32 v22, v5
     2      20/   20/   20          0  v_mov_b32_e32 v22, v5
     3      24/   24/   24          0  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_mfma16_fill3_pkfma(int*)  (ui_output_agent_62036_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_fill3_pkfma(int*)  (ui_output_agent_30253_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mov_b32_e32 v22, v5
@@ -375,7 +393,7 @@ x_mfma_dot                16.16           12.18                   2109         0
     3      24/   24/   24          0  v_mov_b32_e32 v22, v5
     4      28/   28/   28          0  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_mfma16_fill4_pkfma(int*)  (ui_output_agent_36140_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_fill4_pkfma(int*)  (ui_output_agent_59408_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mov_b32_e32 v22, v5
@@ -384,7 +402,7 @@ x_mfma_dot                16.16           12.18                   2109         0
     4      28/   28/   28          0  v_mov_b32_e32 v22, v5
     5      32/   32/   32          0  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_mfma16_fill5_pkfma(int*)  (ui_output_agent_18181_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_fill5_pkfma(int*)  (ui_output_agent_411_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mov_b32_e32 v22, v5
@@ -394,7 +412,7 @@ x_mfma_dot                16.16           12.18                   2109         0
     5      32/   32/   32          0  v_mov_b32_e32 v22, v5
     6      36/   36/   36          0  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_mfma16_fill6_pkfma(int*)  (ui_output_agent_18419_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_fill6_pkfma(int*)  (ui_output_agent_33250_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_mov_b32_e32 v22, v5
@@ -405,19 +423,19 @@ x_mfma_dot                16.16           12.18                   2109         0
     6      36/   36/   36          0  v_mov_b32_e32 v22, v5
     7      40/   40/   40          0  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
 
-== lat_mfma16_pkfma_mfma16(int*)  (ui_output_agent_17896_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkfma_mfma16(int*)  (ui_output_agent_46473_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]
     2      28/   28/   28          0  v_mfma_f32_16x16x16_bf16 v[24:27], v[0:1], v[2:3], v[24:27]
 
-== lat_mfma16_dot_mfma16(int*)  (ui_output_agent_55628_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_dot_mfma16(int*)  (ui_output_agent_15630_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2_f32_f16 v22, v4, v5, v6
     2      28/   28/   28          0  v_mfma_f32_16x16x16_bf16 v[24:27], v[0:1], v[2:3], v[24:27]
 
-== lat_mfma16_pkf16x3_mfma16(int*)  (ui_output_agent_49267_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkf16x3_mfma16(int*)  (ui_output_agent_4368_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_add_f16 v22, v4, v5
@@ -425,97 +443,97 @@ x_mfma_dot                16.16           12.18                   2109         0
     3      24/   24/   24          0  v_pk_mul_f16 v100, v4, v5
     4      28/   28/   28          0  v_mfma_f32_16x16x16_bf16 v[24:27], v[0:1], v[2:3], v[24:27]
 
-== lat_mfma16_pkfmaf16(int*)  (ui_output_agent_28390_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkfmaf16(int*)  (ui_output_agent_28336_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_fma_f16 v22, v4, v5, v6
 
-== lat_mfma16_pkmulf16(int*)  (ui_output_agent_13707_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkmulf16(int*)  (ui_output_agent_31852_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_mul_f16 v22, v4, v5
 
-== lat_mfma16_pkaddu16(int*)  (ui_output_agent_16368_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkaddu16(int*)  (ui_output_agent_9043_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_add_u16 v22, v4, v5
 
-== lat_mfma16_pkmullo(int*)  (ui_output_agent_53909_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_pkmullo(int*)  (ui_output_agent_8427_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_pk_mul_lo_u16 v22, v4, v5
 
-== lat_mfma16_exp(int*)  (ui_output_agent_9950_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_exp(int*)  (ui_output_agent_10755_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_exp_f32_e32 v22, v4
 
-== lat_mfma16_cvtpkfp8(int*)  (ui_output_agent_50494_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_cvtpkfp8(int*)  (ui_output_agent_63660_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      16/   16/   16         12  v_cvt_pk_fp8_f32 v22, v4, v5
 
-== lat_mfma16_dot2c(int*)  (ui_output_agent_26435_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_dot2c(int*)  (ui_output_agent_4259_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2c_f32_f16_e32 v22, v4, v5
 
-== lat_mfma16_dot2i16(int*)  (ui_output_agent_2445_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_dot2i16(int*)  (ui_output_agent_13397_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot2_i32_i16 v22, v4, v5, v6
 
-== lat_mfma16_dot4i8(int*)  (ui_output_agent_52651_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_dot4i8(int*)  (ui_output_agent_50337_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot4_i32_i8 v22, v4, v5, v6
 
-== lat_mfma16_dot4c(int*)  (ui_output_agent_31073_dispatch_1, 4 waves, 124 reps)
+== lat_mfma16_dot4c(int*)  (ui_output_agent_7783_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x16_bf16 v[8:11], v[0:1], v[2:3], v[8:11]
     1      24/   24/   24         20  v_dot4c_i32_i8_e32 v22, v4, v5
 
-== lat_xdl32_dot2c(int*)  (ui_output_agent_43862_dispatch_1, 4 waves, 124 reps)
+== lat_xdl32_dot2c(int*)  (ui_output_agent_29382_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_32x32x8_bf16 v[32:47], v[0:1], v[2:3], v[32:47]
     1      40/   40/   40         36  v_dot2c_f32_f16_e32 v22, v4, v5
 
-== lat_xdl32_dot4c(int*)  (ui_output_agent_42258_dispatch_1, 4 waves, 124 reps)
+== lat_xdl32_dot4c(int*)  (ui_output_agent_26584_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_32x32x8_bf16 v[32:47], v[0:1], v[2:3], v[32:47]
     1      40/   40/   40         36  v_dot4c_i32_i8_e32 v22, v4, v5
 
-== lat_sgemm_dot2c(int*)  (ui_output_agent_48705_dispatch_1, 4 waves, 124 reps)
+== lat_sgemm_dot2c(int*)  (ui_output_agent_31167_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x4_f32 v[8:11], v0, v1, v[8:11]
     1      40/   40/   40         36  v_dot2c_f32_f16_e32 v22, v4, v5
 
-== lat_sgemm_dot4c(int*)  (ui_output_agent_53449_dispatch_1, 4 waves, 124 reps)
+== lat_sgemm_dot4c(int*)  (ui_output_agent_58892_dispatch_1, 4 waves, 124 reps)
   pos  issue@ (min/med/max)  stall med  asm
     0       0/    0/    0          0  v_mfma_f32_16x16x4_f32 v[8:11], v0, v1, v[8:11]
     1      40/   40/   40         36  v_dot4c_i32_i8_e32 v22, v4, v5
 
-== x_mfma_fma(unsigned long long*, int)  (ui_output_agent_14107_dispatch_1, 4 SIMDs)
-  MFMA->MFMA gap      16:2036  360:4
-  probe->probe gap    4:4059  8:21  116:4  3540:4
-  probes inside MFMA stream: 342, outside: 3754
+== x_mfma_fma(unsigned long long*, int)  (ui_output_agent_7085_dispatch_1, 4 SIMDs)
+  MFMA->MFMA gap      16:2036  532:4
+  probe->probe gap    4:4058  8:22  244:3  264:1  468:4
+  probes inside MFMA stream: 516, outside: 3580
   probe - last MFMA (min 16)   16:4  20:4  24:4  28:4  32:4  36:4  40:4  44:4  48:4  52:4  56:4  60:4
 
-== x_mfma_pkfma(unsigned long long*, int)  (ui_output_agent_30036_dispatch_1, 4 SIMDs)
-  MFMA->MFMA gap      16:2036  356:4
-  probe->probe gap    4:4036  8:36  28:8  272:2  292:2  2012:4
-  probes inside MFMA stream: 332, outside: 3764
-  probe - last MFMA (min 24)   24:4  28:4  32:4  36:4  40:4  44:4  48:4  52:4  56:4  60:4  64:4  68:4
+== x_mfma_pkfma(unsigned long long*, int)  (ui_output_agent_23217_dispatch_1, 4 SIMDs)
+  MFMA->MFMA gap      16:2040
+  probe->probe gap    4:4043  8:33  28:8  664:4
+  probes inside MFMA stream: 0, outside: 4096
+  probe - last MFMA   -
 
-== x_mfma_pkaddf16(unsigned long long*, int)  (ui_output_agent_33182_dispatch_1, 4 SIMDs)
-  MFMA->MFMA gap      16:2036  260:4
-  probe->probe gap    4:4051  8:21  28:8  224:2  240:1  244:1  1492:4
-  probes inside MFMA stream: 244, outside: 3852
-  probe - last MFMA (min 16)   16:4  20:4  24:4  28:4  32:4  36:4  40:4  44:4  48:4  52:4  56:4  60:4
+== x_mfma_pkaddf16(unsigned long long*, int)  (ui_output_agent_17124_dispatch_1, 4 SIMDs)
+  MFMA->MFMA gap      16:2040
+  probe->probe gap    4:4057  8:19  28:8  416:2  420:2
+  probes inside MFMA stream: 0, outside: 4096
+  probe - last MFMA   -
 
-== x_mfma_dot(unsigned long long*, int)  (ui_output_agent_45329_dispatch_1, 4 SIMDs)
-  MFMA->MFMA gap      16:2036  564:4
-  probe->probe gap    4:4050  8:26  28:4  260:4  2524:4
-  probes inside MFMA stream: 540, outside: 3556
-  probe - last MFMA (min 24)   24:4  28:4  32:4  36:4  40:4  44:4  48:4  52:4  56:4  60:4  64:4  68:4
+== x_mfma_dot(unsigned long long*, int)  (ui_output_agent_6838_dispatch_1, 4 SIMDs)
+  MFMA->MFMA gap      16:2040
+  probe->probe gap    4:4040  8:36  28:8  732:4
+  probes inside MFMA stream: 0, outside: 4096
+  probe - last MFMA   -
 
