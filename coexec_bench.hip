@@ -128,6 +128,8 @@
 // Legacy sparse XDL (both targets).
 #define SM_LEG      S("v_smfmac_f32_16x16x32_f16 v[8:11], v[0:1], v[56:59], v20")
 #define SM_LEG_B    S("v_smfmac_f32_16x16x32_f16 v[24:27], v[0:1], v[56:59], v20")
+#define SM_LEG32    S("v_smfmac_f32_32x32x16_f16 v[32:47], v[0:1], v[56:59], v20")
+#define SM_LEG32_B  S("v_smfmac_f32_32x32x16_f16 v[80:95], v[0:1], v[56:59], v20")
 
 #define PK_FMA      S("v_pk_fma_f32 v[12:13], v[4:5], v[6:7], v[14:15]")
 #define PK_MUL      S("v_pk_mul_f32 v[16:17], v[4:5], v[6:7]")
@@ -229,6 +231,7 @@ LAT_QUAD(f16, MFMA_F16)
 LAT_QUAD(i8, MFMA_I8)
 LAT_QUAD(fp8, MFMA_FP8)
 LAT_ROW(smleg, SM_LEG, SM_LEG_B)
+LAT_ROW(smleg32, SM_LEG32, SM_LEG32_B)
 LAT_QUAD(sgemm, MFMA_F32)
 LAT_QUAD(dgemm16, MFMA_F64)
 LAT_ROW(dgemm4, MFMA_F64_4X4, MFMA_F64_4X4_B)
@@ -598,8 +601,8 @@ struct TputK { const char *name; void (*fn)(unsigned long long *, int); };
 #define L(n) {"lat_" #n, lat_##n}
 static const LatK kLat[] = {
     LR(xdl16),    LQ(xdl16acc), LQ(xdl4),     LQ(xdl32),    LQ(f16),
-    LQ(i8),       LQ(fp8),      LR(smleg),    LQ(sgemm),    LQ(dgemm16),
-    LR(dgemm4),
+    LQ(i8),       LQ(fp8),      LR(smleg),    LR(smleg32),  LQ(sgemm),
+    LQ(dgemm16),  LR(dgemm4),
 #ifndef GFX950
     LQ(xf32),
 #endif
